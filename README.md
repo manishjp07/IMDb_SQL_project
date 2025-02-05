@@ -6,7 +6,7 @@ OVERVIEW:
 
 This project focuses on analyzing the IMDb Top 250 movies dataset using SQL to derive meaningful insights. The goal is to explore various aspects of highly-rated movies, including their ratings, genres, directors, cast, and trends over time. The analysis helps answer critical business and analytical questions about movie popularity, rating distributions, and genre preferences.
 
-OVERVIEW:
+OBJECTIVES:
 
 
 1.Identify the highest-rated movies and trends over different years.
@@ -18,3 +18,9 @@ OVERVIEW:
 4.Explore the relationship between movie duration and ratings.
 
 5.Categorize movies based on different characteristics, such as content rating and duration.
+
+DATASET:
+
+The data for this project is sourced from the Kaggle dataset:
+
+->DATASET LINK:https://www.kaggle.com/datasets/rajugc/imdb-top-250-movies-dataset
