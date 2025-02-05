@@ -10,7 +10,11 @@ OVERVIEW:
 
 
 1.Identify the highest-rated movies and trends over different years.
+
 2.Analyze the distribution of movies by genre, director, and decade.
+
 3.Determine the most successful directors based on IMDb scores.
+
 4.Explore the relationship between movie duration and ratings.
+
 5.Categorize movies based on different characteristics, such as content rating and duration.
