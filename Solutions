@@ -1,1 +1,215 @@
+Top 10 Highest-Rated Movies:
 
+SELECT movie_name, imdb_score  
+FROM imdb_top_250  
+ORDER BY imdb_score DESC  
+LIMIT 10;
+
+Highest IMDb Score by Year of Release:
+
+SELECT year_of_release, MAX(IMDb_score) AS highest_rating  
+FROM imdb_top_250  
+GROUP BY year_of_release  
+ORDER BY year_of_release ASC;
+
+Average IMDb Score by Genre:
+
+SELECT AVG(IMDb_score), genre  
+FROM imdb_top_250  
+GROUP BY genre  
+ORDER BY genre ASC;
+
+Count of Movies by Genre:
+
+SELECT COUNT(movie_name), genre  
+FROM imdb_top_250  
+GROUP BY genre;
+
+Movies Released in 1990:
+
+SELECT movie_name  
+FROM imdb_top_250  
+WHERE year_of_release = 1990;
+
+Director with the Highest Average IMDb Score:
+
+SELECT AVG(imdb_score), directors  
+FROM imdb_top_250  
+GROUP BY directors  
+ORDER BY AVG(IMDb_score) DESC  
+LIMIT 1;
+
+Movies Starting with "THE":
+
+SELECT movie_name  
+FROM imdb_top_250  
+WHERE movie_name LIKE 'THE%';
+
+Movie with the Longest Title:
+
+SELECT movie_name, LENGTH(movie_name) AS title_length  
+FROM imdb_top_250  
+ORDER BY title_length DESC  
+LIMIT 1;
+
+Oldest Movie in the Dataset:
+
+SELECT movie_name, year_of_release  
+FROM imdb_top_250  
+ORDER BY year_of_release ASC  
+LIMIT 1;
+
+Top 5 Directors with Most Movies:
+
+SELECT directors, COUNT(*) AS movie_count  
+FROM imdb_top_250  
+GROUP BY directors  
+ORDER BY movie_count DESC  
+LIMIT 5;
+
+Movies with Above-Average IMDb Scores:
+
+SELECT movie_name, imdb_score  
+FROM imdb_top_250  
+WHERE imdb_score > (SELECT AVG(imdb_score) FROM imdb_top_250)  
+ORDER BY imdb_score DESC;
+
+Genre Percentage Representation:
+
+SELECT genre, ROUND((COUNT(*) * 100.0) / (SELECT COUNT(*) FROM imdb_top_250), 2) AS percentage  
+FROM imdb_top_250  
+GROUP BY genre  
+ORDER BY percentage DESC;
+
+Directors with More Than One Movie:
+
+SELECT directors, COUNT(*) AS movie_count  
+FROM imdb_top_250  
+GROUP BY directors  
+HAVING movie_count > 1  
+ORDER BY movie_count DESC;
+
+Movies with IMDb Score Greater Than 8:
+
+SELECT movie_name, imdb_score  
+FROM imdb_top_250  
+WHERE imdb_score > 8;
+
+Movie with the Highest IMDb Score:
+
+SELECT movie_name, imdb_score  
+FROM imdb_top_250  
+WHERE IMDb_score = (SELECT MAX(imdb_score) FROM imdb_top_250);
+
+Top 5 Cast Members with the Most Highly Rated Movies:
+
+SELECT Cast, COUNT(*) AS MovieCount  
+FROM imdb_top_250  
+WHERE imdb_score > 8  
+GROUP BY Cast  
+ORDER BY MovieCount DESC  
+LIMIT 5;
+
+Top Movie by Country of Origin:
+
+WITH TopMovies AS (  
+    SELECT `Country of Origin`, MAX(`Average Rating`) AS MaxRating  
+    FROM IMDB_Movies  
+    GROUP BY `Country of Origin`  
+)  
+SELECT t1.Title, t1.`Country of Origin`, t1.`Average Rating`  
+FROM IMDB_Movies t1  
+JOIN TopMovies t2  
+ON t1.`Country of Origin` = t2.`Country of Origin` AND t1.`Average Rating` = t2.MaxRating;
+
+Top 5 Longest Movies by Duration:
+
+SELECT genre, movie_name, duration  
+FROM imdb_top_250  
+WHERE duration IS NOT NULL  
+ORDER BY duration DESC  
+LIMIT 5;
+
+Top 5 Directors with Most Movies Rated Above 8.5:
+
+SELECT directors, COUNT(*) AS high_score_count  
+FROM imdb_top_250  
+WHERE imdb_score > 8.5  
+GROUP BY directors  
+ORDER BY high_score_count DESC  
+LIMIT 5;
+
+Movies Count by Content Rating:
+
+SELECT content_rating, COUNT(*) AS movie_count  
+FROM imdb_top_250  
+GROUP BY content_rating  
+ORDER BY movie_count DESC;
+
+Directors Handling Multiple Genres:
+
+SELECT directors, COUNT(DISTINCT genre) AS genre_count  
+FROM imdb_top_250  
+GROUP BY directors  
+HAVING genre_count > 1  
+ORDER BY genre_count DESC;
+
+Movies Count by Decade:
+
+SELECT (FLOOR(year_of_release / 10) * 10) AS decade, COUNT(*) AS movie_count  
+FROM imdb_top_250  
+GROUP BY decade  
+ORDER BY decade;
+
+Longest Movie in Each Genre:
+
+SELECT genre, movie_name, duration  
+FROM imdb_top_250 t1  
+WHERE duration = (  
+    SELECT MAX(duration)  
+    FROM imdb_top_250 t2  
+    WHERE t1.genre = t2.genre  
+);
+
+Top 5 Movies with the Longest Plot Descriptions:
+
+SELECT movie_name, LENGTH(plot) AS plot_length  
+FROM IMDB_top_250  
+ORDER BY plot_length DESC  
+LIMIT 5;
+
+Top 5 Genres with the Highest Average IMDb Scores:
+
+SELECT genre, AVG(imdb_score) AS avg_score  
+FROM imdb_top_250  
+GROUP BY genre  
+ORDER BY avg_score DESC  
+LIMIT 5;
+
+Top 5 Directors with the Highest Average IMDb Scores:
+
+SELECT directors, AVG(imdb_score) AS avg_score  
+FROM imdb_top_250  
+GROUP BY directors  
+ORDER BY avg_score DESC  
+LIMIT 5;
+
+Movies Categorized by Duration:
+
+SELECT  
+    CASE  
+        WHEN duration < 90 THEN 'Short (< 90 min)'  
+        WHEN duration BETWEEN 90 AND 120 THEN 'Standard (90-120 min)'  
+        WHEN duration > 120 THEN 'Long (> 120 min)'  
+    END AS duration_range,  
+    COUNT(*) AS movie_count  
+FROM imdb_top_250  
+GROUP BY duration_range;
+
+Top 3 Most Common Genres:
+
+SELECT genre, COUNT(*) AS movie_count  
+FROM imdb_top_250  
+GROUP BY genre  
+ORDER BY movie_count DESC  
+LIMIT 3;
